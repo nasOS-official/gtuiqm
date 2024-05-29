@@ -60,9 +60,9 @@ func CreateMenu(elem int, menu []string, title string, fullline bool, selected_b
 	for i := 0; i < len(menu); i++ {
 		if elem == i {
 			if fullline {
-				fmt.Printf("\x1b[4" + fmt.Sprint(selected_bg_color) + ";3" + fmt.Sprint(selected_color) + ";4" + fmt.Sprint(selected_bg_color) + "m" + menu[i] + "\x1b[K\x1b[0m\n")
+				fmt.Printf("\x1b[4" + fmt.Sprint(selected_bg_color) + ";3" + fmt.Sprint(selected_color) + "m" + menu[i] + "\x1b[K\x1b[0m\n")
 			} else {
-				fmt.Printf("\x1b[4" + fmt.Sprint(selected_bg_color) + ";3" + fmt.Sprint(selected_color) + ";4" + fmt.Sprint(selected_bg_color) + "m" + menu[i] + "\x1b[0m\n")
+				fmt.Printf("\x1b[4" + fmt.Sprint(selected_bg_color) + ";3" + fmt.Sprint(selected_color) + "m" + menu[i] + "\x1b[0m\n")
 			}
 		} else {
 			fmt.Println(menu[i])
