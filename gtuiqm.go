@@ -18,12 +18,12 @@ import (
 	"atomicgo.dev/keyboard/keys"
 )
 
-func ShowMenu(menu []string, title string, fullline ...bool) {
-	if fullline == nil {
-		fullline = []bool{false}
-	}
+func Clear() {
+	fmt.Printf("\033c")
+}
+func ShowMenu(menu []string, title string, fullline bool, selected_bg_color int, selected_color int) {
 	elem := 0
-	CreateMenu(elem, menu, title, fullline[0])
+	CreateMenu(elem, menu, title, fullline, selected_bg_color, selected_color)
 	keyboard.Listen(func(key keys.Key) (stop bool, err error) {
 
 		switch key.Code {
@@ -33,7 +33,7 @@ func ShowMenu(menu []string, title string, fullline ...bool) {
 			} else {
 				elem = len(menu) - 1
 			}
-			CreateMenu(elem, menu, title, fullline[0])
+			CreateMenu(elem, menu, title, fullline, selected_bg_color, selected_color)
 
 		case keys.Down:
 
@@ -43,7 +43,7 @@ func ShowMenu(menu []string, title string, fullline ...bool) {
 				elem = 0
 			}
 
-			CreateMenu(elem, menu, title, fullline[0])
+			CreateMenu(elem, menu, title, fullline, selected_bg_color, selected_color)
 
 		case keys.Enter:
 			return true, nil
@@ -53,18 +53,16 @@ func ShowMenu(menu []string, title string, fullline ...bool) {
 	})
 
 }
-func CreateMenu(elem int, menu []string, title string, fullline ...bool) {
-	if fullline == nil {
-		fullline = []bool{false}
-	}
-	fmt.Printf("\033c")
+func CreateMenu(elem int, menu []string, title string, fullline bool, selected_bg_color int, selected_color int) {
+
+	Clear()
 	fmt.Printf("\x1b[35m" + title + "\x1b[0m\n")
 	for i := 0; i < len(menu); i++ {
 		if elem == i {
-			if fullline[0] {
-				fmt.Printf("\x1b[47;30m" + menu[i] + "\x1b[K\x1b[0m\n")
+			if fullline {
+				fmt.Printf("\x1b[4" + fmt.Sprint(selected_bg_color) + ";3" + fmt.Sprint(selected_color) + ";4" + fmt.Sprint(selected_bg_color) + "m" + menu[i] + "\x1b[K\x1b[0m\n")
 			} else {
-				fmt.Printf("\x1b[47;30m" + menu[i] + "\x1b[0m\n")
+				fmt.Printf("\x1b[4" + fmt.Sprint(selected_bg_color) + ";3" + fmt.Sprint(selected_color) + ";4" + fmt.Sprint(selected_bg_color) + "m" + menu[i] + "\x1b[0m\n")
 			}
 		} else {
 			fmt.Println(menu[i])
