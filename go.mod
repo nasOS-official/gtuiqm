@@ -1,4 +1,4 @@
-module github.com/nasOS-official
+module github.com/nasOS-official/gtuiqm
 
 go 1.22.3
 
