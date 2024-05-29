@@ -57,12 +57,15 @@ func CreateMenu(elem int, menu []string, title string, fullline ...bool) {
 	if fullline == nil {
 		fullline = []bool{false}
 	}
-
 	fmt.Printf("\033c")
 	fmt.Printf("\x1b[35m" + title + "\x1b[0m\n")
 	for i := 0; i < len(menu); i++ {
 		if elem == i {
-			fmt.Printf("\x1b[47;30m" + menu[i] + "\x1b[0m\n")
+			if fullline[0] {
+				fmt.Printf("\x1b[47;30m" + menu[i] + "\x1b[K\x1b[0m\n")
+			} else {
+				fmt.Printf("\x1b[47;30m" + menu[i] + "\x1b[0m\n")
+			}
 		} else {
 			fmt.Println(menu[i])
 		}
